@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+{% block stylesheets %}
+    {{include('inc/head.html.twig')}}
+{% endblock %}
+<body>
+{{include('inc/nav.html.twig')}}
+{{include('inc/sidebar.html.twig')}}
+	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
+
+		<div class="row">
+			{% block content %}{% endblock %}
+		</div><!--/.row-->
+	</div>	<!--/.main-->
+{% include('inc/scripts.html.twig') %}
+</body>
+
+</html>
