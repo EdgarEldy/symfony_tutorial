@@ -34,6 +34,11 @@ class CustomersController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid())
         {
+            //Flash message
+            $this->addFlash(
+                'customer_saved',
+                'Customer has been saved successfully !'
+            );
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($customer);
             $entityManager->flush();
@@ -54,6 +59,11 @@ class CustomersController extends AbstractController
      */
     public function edit(Request $request, Customer $customer): Response
     {
+        //Flash message
+        $this->addFlash(
+            'customer_updated',
+            'Customer has been updated successfully !'
+        );
         $form = $this->createForm(CustomerType::class, $customer);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid())
@@ -78,6 +88,11 @@ class CustomersController extends AbstractController
     {
     if ($this->isCsrfTokenValid('delete'.$customer->getId(),$request->request->get('_token')))
     {
+        //Flash message
+        $this->addFlash(
+            'customer_deleted',
+            'Customer has been removed successfully !'
+        );
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($customer);
         $entityManager->flush();

@@ -34,6 +34,13 @@ class CategoriesController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid())
         {
+
+            //Flash message
+            $this->addFlash(
+              'category_saved',
+              'Category has been saved successfully !'
+            );
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($category);
             $entityManager->flush();
@@ -70,6 +77,11 @@ class CategoriesController extends AbstractController
     $form->handleRequest($request);
     if ($form->isSubmitted() && $form->isValid())
     {
+        //Flash message
+        $this->addFlash(
+            'category_updated',
+            'Category has been updated successfully !'
+        );
         $this->getDoctrine()->getManager()->flush();
 
         return $this->redirectToRoute('categories');
@@ -90,6 +102,13 @@ class CategoriesController extends AbstractController
     public function delete(Request $request, Category $category): Response
     {
         if ($this->isCsrfTokenValid('delete'.$category->getId(),$request->request->get('_token'))){
+
+            //Flash message
+            $this->addFlash(
+                'category_removed',
+                'Category has been removed successfully !'
+            );
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($category);
             $entityManager->flush();
