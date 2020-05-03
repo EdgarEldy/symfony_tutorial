@@ -19,7 +19,7 @@ class Product
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="products")
      */
-    private $category_id;
+    private $category;
 
     /**
      * @ORM\Column(type="string", length=45)
@@ -36,14 +36,14 @@ class Product
         return $this->id;
     }
 
-    public function getCategoryId(): ?Category
+    public function getCategory(): ?Category
     {
-        return $this->category_id;
+        return $this->category;
     }
 
-    public function setCategoryId(?Category $category_id): self
+    public function setCategory(?Category $category): self
     {
-        $this->category_id = $category_id;
+        $this->category = $category;
 
         return $this;
     }
