@@ -47,4 +47,18 @@ class ProductRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function findProductsJoinedByCategory()
+    {
+        $entityManager = $this->getEntityManager();
+        $query = $entityManager->createQuery(
+            'SELECT p,c
+                 FROM App\Entity\Product p
+                 INNER JOIN p.category c
+                 WHERE p.category = c.id
+                '
+        );
+        return $query->getArrayResult();
+    }
+
 }
