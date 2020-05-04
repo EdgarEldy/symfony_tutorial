@@ -5,7 +5,7 @@
             <div class="panel-heading">
 
                 <!-- Flash messages -->
-                {% for messages in app.flashes(['customer_saved', 'customer_updated']) %}
+                {% for messages in app.flashes(['product_saved', 'product_updated']) %}
                     {% for message in messages %}
                         <div class="btn btn-success">
                             {{ message }}
@@ -13,12 +13,12 @@
                     {% endfor %}
                 {% endfor %}
 
-                {% for message in app.flashes('customer_removed') %}
+                {% for message in app.flashes('product_removed') %}
                 <div class="btn btn-danger">{{ message }}</div>
                 {% endfor %}
 
             </div>
-            <div class="panel-heading">Customers</div>
+            <div class="panel-heading">Products</div>
             <div class="panel-body">
                 <a href="{{ path('products/add') }}"
                    class="btn btn-primary">New</a>
