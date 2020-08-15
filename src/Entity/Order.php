@@ -22,21 +22,21 @@ class Order
      * @ORM\ManyToOne(targetEntity=Customer::class, inversedBy="orders")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $customer_id;
+    private $customer;
 
     /**
      * @ORM\ManyToOne(targetEntity=Product::class, inversedBy="orders")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $product_id;
+    private $product;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="integer")
      */
     private $qty;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="integer")
      */
     private $total;
 
@@ -45,26 +45,26 @@ class Order
         return $this->id;
     }
 
-    public function getCustomerId(): ?Customer
+    public function getCustomer(): ?Customer
     {
-        return $this->customer_id;
+        return $this->customer;
     }
 
-    public function setCustomerId(?Customer $customer_id): self
+    public function setCustomer(?Customer $customer): self
     {
-        $this->customer_id = $customer_id;
+        $this->customer = $customer;
 
         return $this;
     }
 
-    public function getProductId(): ?Product
+    public function getProduct(): ?Product
     {
-        return $this->product_id;
+        return $this->product;
     }
 
-    public function setProductId(?Product $product_id): self
+    public function setProduct(?Product $product): self
     {
-        $this->product_id = $product_id;
+        $this->product = $product;
 
         return $this;
     }
