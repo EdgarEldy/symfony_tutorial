@@ -47,4 +47,22 @@ class OrderRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    /**
+     * @return array
+     */
+    public function findOrders()
+    {
+        $entityManager = $this->getEntityManager();
+        $query = $entityManager->createQuery(
+            'SELECT o,c,p
+                FROM App\Entity\Order o
+                INNER JOIN o.customer c
+                INNER JOIN o.product p
+                WHERE o.customer = c.id
+                AND o.product = p.id
+                '
+        );
+        return $query->getArrayResult();
+    }
 }
