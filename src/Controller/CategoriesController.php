@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class CategoriesController extends AbstractController
 {
     /**
-     * @Route("/", name="categories", methods={"GET"})
+     * @Route("", name="categories", methods={"GET"})
      */
     public function index(CategoryRepository $categoryRepository): Response
     {
@@ -26,9 +26,9 @@ class CategoriesController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="/categories/new", methods={"GET", "POST"})
+     * @Route("/add", name="categories/add", methods={"GET", "POST"})
      */
-    public function new(Request $request, CategoryRepository $categoryRepository): Response
+    public function add(Request $request, CategoryRepository $categoryRepository): Response
     {
         $category = new Category();
         $form = $this->createForm(CategoryType::class, $category);
@@ -37,17 +37,22 @@ class CategoriesController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $categoryRepository->add($category, true);
 
+            // Flash message
+            $this->addFlash(
+                'category_saved',
+                'Category has been saved successfully !'
+            );
             return $this->redirectToRoute('categories', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('categories/new.html.twig', [
+        return $this->renderForm('categories/add.html.twig', [
             'category' => $category,
             'form' => $form,
         ]);
     }
 
     /**
-     * @Route("show/{id}", name="categories/show", methods={"GET"})
+     * @Route("/show/{id}", name="categories/show", methods={"GET"})
      */
     public function show(Category $category): Response
     {
@@ -67,6 +72,11 @@ class CategoriesController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $categoryRepository->add($category, true);
 
+            // Flash message
+            $this->addFlash(
+                'category_updated',
+                'Category has been updated successfully !'
+            );
             return $this->redirectToRoute('categories', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -81,10 +91,15 @@ class CategoriesController extends AbstractController
      */
     public function delete(Request $request, Category $category, CategoryRepository $categoryRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$category->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $category->getId(), $request->request->get('_token'))) {
             $categoryRepository->remove($category, true);
         }
 
+        // Flash message
+        $this->addFlash(
+            'category_removed',
+            'Category has been removed successfully !'
+        );
         return $this->redirectToRoute('categories', [], Response::HTTP_SEE_OTHER);
     }
 }
